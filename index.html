@@ -9,12 +9,12 @@
 <body>
     <script>
         const test = {
-            type: 'POST',
+            type: 'GET',
             data: {
-                first: 1,
+                first: 12,
                 secound: 2,
                 third: 3,
-                array: [12, 13, 41]
+                array: [12, 13, 14]
             },
         };
         const socket = new WebSocket('ws://localhost:8000/');
@@ -27,8 +27,7 @@
         socket.onmessage = function(event) {
             const response = JSON.parse(event.data);
             console.log(response);
-        };
-    
+        };    
         
     </script>
 </body>
