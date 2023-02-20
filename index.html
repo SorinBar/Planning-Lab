@@ -8,19 +8,27 @@
 </head>
 <body>
     <script>
+        const test = {
+            type: 'POST',
+            data: {
+                first: 1,
+                secound: 2,
+                third: 3,
+                array: [12, 13, 41]
+            },
+        };
         const socket = new WebSocket('ws://localhost:8000/');
 
         socket.onopen = function(event) {
             const message = {name: 'stopp'};
-            socket.send(JSON.stringify(message));
+            socket.send(JSON.stringify(test));
         };
 
         socket.onmessage = function(event) {
             const response = JSON.parse(event.data);
             console.log(response);
         };
-        
-        console.log("test");
+    
         
     </script>
 </body>

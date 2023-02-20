@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Start server in a new terminal
 gnome-terminal -- python3 server.py
+# Give server time to start
 sleep 1
-/bin/sh -ec 'firefox index.html'
+# Start the app frontend
+firefox index.html
