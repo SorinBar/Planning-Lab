@@ -1,6 +1,9 @@
 # Planning-Lab
-
+Dependencies:
+  * Python3
 Set Up:
-  * sudo apt-get install python3-pip
-  * pip3 install asyncio
-  * pip3 install websockets
+  * chmod +x Planning-Lab.sh
+  * chmod +x setup.sh
+  * ./setup
+Run:
+  * ./Planning-Lab.sh

@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # Start server in a new terminal
 gnome-terminal -- python3 server.py
 # Give server time to start
