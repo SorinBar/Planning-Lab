@@ -7,28 +7,36 @@
     <title>Document</title>
 </head>
 <body>
+    <button id="myButton">send</button>
     <script>
-        const test = {
-            type: 'GET',
-            data: {
-                first: 12,
-                secound: 2,
-                third: 3,
-                array: [12, 13, 14]
-            },
-        };
-        const socket = new WebSocket('ws://localhost:8000/');
+        const socket = new WebSocket('ws://localhost:8000');
 
-        socket.onopen = function(event) {
-            const message = {name: 'stopp'};
-            socket.send(JSON.stringify(test));
-        };
+        socket.addEventListener('open', function (event) {
+            console.log('WebSocket connection established');
 
-        socket.onmessage = function(event) {
-            const response = JSON.parse(event.data);
-            console.log(response);
-        };    
+            const data = {
+                type: 'GET',
+                data: "",
+            };
+
+            const json = JSON.stringify(data);
+
+            socket.send(json);
+        });
+
+        socket.addEventListener('message', function (event) {
+            console.log('Message from server:', event.data);
+        });
         
+        socket.addEventListener('error', function (event) {
+            console.error('WebSocket error:', event);
+        });
+
+        const button = document.getElementById("myButton");
+        button.addEventListener('click', function (event) {
+            socket.send(JSON.stringify({}));
+        });
+                
     </script>
 </body>
 </html>
