@@ -1,0 +1,8 @@
+#main-div {
+    background-color: rgb(203, 193, 206);
+    margin-left: 228px;
+    margin-right: 8px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+}
