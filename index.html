@@ -15,8 +15,8 @@
             console.log('WebSocket connection established');
 
             const data = {
-                type: 'GET',
-                data: "",
+                type: "POST",
+                data: {"Test": 1}
             };
 
             const json = JSON.stringify(data);
@@ -34,7 +34,7 @@
 
         const button = document.getElementById("myButton");
         button.addEventListener('click', function (event) {
-            socket.send(JSON.stringify({}));
+            socket.send(JSON.stringify({type: "STOP"}));
         });
                 
     </script>
