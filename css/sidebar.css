@@ -57,11 +57,11 @@
     align-self: center;
 }
 
-#add-button:hover {
+#add-plan-button:hover {
     background-color: rgb(243, 243, 243);
 }
 
-#add-button:active {
+#add-plan-button:active {
     background-color: #958db4;
 }
 

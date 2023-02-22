@@ -7,7 +7,7 @@ socket.addEventListener('open', function (event) {
 });
 
 socket.addEventListener('message', function (event) {
-    console.log('Message from server:', event.data);
+    //console.log('Message from server:', event.data);
 });
 
 socket.addEventListener('error', function (event) {
