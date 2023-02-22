@@ -39,6 +39,12 @@
     cursor: pointer;
 }
 
+#plans-buttons-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
 #add-plan-button {
     width: 30px;
     border-radius: 12px;
