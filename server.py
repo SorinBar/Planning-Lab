@@ -3,8 +3,8 @@ import websockets
 import json
 import os.path
 
-HOST = 'localhost'
-PORT = 8000
+HOST = ''
+PORT = 5000
 
 def save_data(data):
     with open("data.json", "w") as file:

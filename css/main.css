@@ -5,4 +5,15 @@
     display: flex;
     flex-direction: column;
     border-radius: 8px;
+    min-height: 97vh;
+}
+
+#plan-title-div {
+    text-align: center;
+    color: #695E93;
+    font-size: 30px;
+    font-weight: 800;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    border-bottom-style: solid;
 }
