@@ -15,94 +15,140 @@ socket.addEventListener('error', function (event) {
 });
 
 // Model
-let plans = [ {
+let goals = [ {
         title: "Workout",
-        goals: []
+        tasks: []
     }, {
         title: "Education",
-        goals: []
+        tasks: []
     }, {
         title: "Money",
-        goals: []
+        tasks: []
     }];
 
 
 // View
 function renderSidebar() {
-    const plansDiv = document.getElementById('plans-div');
-    const buttonsDiv = document.getElementById('plans-buttons-div');
+    const goalsDiv = document.getElementById('goals-div');
+    const buttonsDiv = document.getElementById('goals-buttons-div');
 
-    plansDiv.innerHTML = '';
+    goalsDiv.innerHTML = '';
     buttonsDiv.innerHTML = '';
 
     let button;
-    for (let i = 0; i < plans.length; i++) {
+    for (let i = 0; i < goals.length; i++) {
         button = document.createElement('button');
-        button.className = 'plan-button';
-        button.innerText = plans[i].title;
-        button.dataset.planId = i;
-        button.addEventListener('click', planClick);
-        plansDiv.appendChild(button);
+        button.className = 'goals-button';
+        button.innerText = goals[i].title;
+        button.dataset.goalId = i;
+        button.addEventListener('click', goalClick);
+        goalsDiv.appendChild(button);
     }
 
-    const addPlanButton = document.createElement('input');
-    addPlanButton.id = 'add-plan-button';
-    addPlanButton.type = 'image';
-    addPlanButton.src = 'icons/plus2.png';
-    addPlanButton.alt = 'Add';
-    addPlanButton.addEventListener('click', addPlanClick);
-    buttonsDiv.appendChild(addPlanButton);
+    const addGoalButton = document.createElement('input');
+    addGoalButton.id = 'add-goal-button';
+    addGoalButton.type = 'image';
+    addGoalButton.src = 'icons/plus2.png';
+    addGoalButton.alt = 'Add';
+    addGoalButton.addEventListener('click', addGoalClick);
+    buttonsDiv.appendChild(addGoalButton);
 
 };
-function renderAddPlan() {
-    const plansDiv = document.getElementById('plans-div');
+function renderAddGoal() {
+    const goalsDiv = document.getElementById('goals-div');
     const textInput = document.createElement('input');
     textInput.type = 'text';
-    textInput.id = 'add-plan-input';
-    plansDiv.appendChild(textInput);
+    textInput.id = 'add-goal-input';
+    goalsDiv.appendChild(textInput);
     textInput.focus();
 
-    const plansButtonDiv = document.getElementById('plans-buttons-div');
+    const goalsButtonDiv = document.getElementById('goals-buttons-div');
     const okButton = document.createElement('button');
     okButton.innerText = 'OK';
-    okButton.addEventListener('click', okPlanClick);
+    okButton.addEventListener('click', okGoalClick);
     const cancelButton = document.createElement('button');
     cancelButton.innerText = 'CANCEL';
-    cancelButton.addEventListener('click', cancelPlanClick);
+    cancelButton.addEventListener('click', cancelGoalClick);
 
-    plansButtonDiv.innerHTML = '';
-    plansButtonDiv.appendChild(okButton);
-    plansButtonDiv.appendChild(cancelButton);
+    goalsButtonDiv.innerHTML = '';
+    goalsButtonDiv.appendChild(okButton);
+    goalsButtonDiv.appendChild(cancelButton);
 
 };
 function renderMain(index) {
-    console.log(index);
+    const mainDiv = document.getElementById('main-div');
+    mainDiv.innerHTML = '';
+
+    // Title area
+    const titleDiv = document.createElement('div');
+    titleDiv.id = 'goal-title-div';
+
+    const title = document.createElement('div');
+    title.id = 'goal-title';
+    title.innerText = goals[index].title;
+
+    const deleteButton = document.createElement('button');
+    deleteButton.id = 'delete-goal-button';
+    deleteButton.innerText = 'Delete Goal';
+    deleteButton.dataset.goalId = index;
+    deleteButton.addEventListener('click', deleteGoalClick);
+
+    titleDiv.appendChild(title);
+    titleDiv.appendChild(deleteButton);
+
+    // Tasks area
+
+    const tasksDiv = document.createElement('div');
+    tasksDiv.id = 'tasks-div';
+        // fill tasks
+
+    // Button
+    const addButton = document.createElement('button');
+    addButton.id = 'add-task-button';
+    addButton.innerText = 'Add Task';
+    addButton.dataset.goalId = index;  
+
+    mainDiv.appendChild(titleDiv);
+    mainDiv.appendChild(tasksDiv);
+    mainDiv.appendChild(addButton);
 };
+
+function renderEmptyMain() {
+    const mainDiv = document.getElementById('main-div');
+    mainDiv.innerHTML = '';
+}
 // Controler
-function planClick(event) {
-    const planButton = event.target;
-    renderMain(planButton.dataset.planId);
+function goalClick(event) {
+    const goalButton = event.target;
+    renderMain(goalButton.dataset.goalId);
 };
-function addPlanClick(event) {
-    renderAddPlan();
+function addGoalClick(event) {
+    renderAddGoal();
 };
-function okPlanClick(event) {
-    const textInput = document.getElementById('add-plan-input');
+function okGoalClick(event) {
+    const textInput = document.getElementById('add-goal-input');
     if (isValid(textInput.value)) {
-        plans.push({
+        goals.push({
             title: textInput.value,
-            goals: []
+            tasks: []
         });
         renderSidebar();
     }
 };
-function cancelPlanClick(event) {
+function cancelGoalClick(event) {
     renderSidebar();
 };
-
+function deleteGoalClick(event){
+    const deleteButton = event.target;
+    const goalId = deleteButton.dataset.goalId;
+    goals.splice(goalId, 1);
+    renderSidebar();
+    renderEmptyMain();
+}
 
 function isValid(str) {
     return str.match(/^[a-zA-Z0-9]+$/) !== null && str.length < 16;
 }
 // Run
 renderSidebar();
+renderEmptyMain();

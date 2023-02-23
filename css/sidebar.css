@@ -19,13 +19,13 @@
     align-items: center;
 }
 
-#plans-div {
+#goals-div {
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
 }
 
-.plan-button {
+.goals-button {
     border: none;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -39,13 +39,13 @@
     cursor: pointer;
 }
 
-#plans-buttons-div {
+#goals-buttons-div {
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
 
-#add-plan-button {
+#add-goal-button {
     width: 30px;
     border-radius: 12px;
     padding: 4px;
@@ -57,11 +57,11 @@
     align-self: center;
 }
 
-#add-plan-button:hover {
+#add-goal-button:hover {
     background-color: rgb(243, 243, 243);
 }
 
-#add-plan-button:active {
+#add-goal-button:active {
     background-color: #958db4;
 }
 
