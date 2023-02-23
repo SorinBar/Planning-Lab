@@ -1,4 +1,7 @@
-// Communication
+/* Communication */
+// Get data from server: {type: "GET"}
+// Update data on server: {type: "POST", data: <updated data>}
+// Stop server: {type: "STOP"}
 const socket = new WebSocket('ws://localhost:5000');
 
 socket.addEventListener('open', function (event) {
@@ -7,25 +10,29 @@ socket.addEventListener('open', function (event) {
 });
 
 socket.addEventListener('message', function (event) {
-    //console.log('Message from server:', event.data);
+    response = JSON.parse(event.data);
+    if ("error" in response) {
+        console.log(response.error);
+    }
+    else if ("type" in response) {
+        if (response.type == "GET") {
+            goals = response.data;
+            renderSidebar();
+            renderEmptyMain();
+        }
+    } 
 });
 
 socket.addEventListener('error', function (event) {
     console.error('WebSocket error:', event);
 });
 
-// Model
-let goals = [ {
-        title: "Workout",
-        tasks: []
-    }, {
-        title: "Education",
-        tasks: []
-    }, {
-        title: "Money",
-        tasks: []
-    }];
+function updateServer() {
+    socket.send(JSON.stringify({type: "POST", data: goals}));
+};
 
+// Model
+let goals = [];
 
 // View
 function renderSidebar() {
@@ -75,7 +82,11 @@ function renderAddGoal() {
     goalsButtonDiv.appendChild(cancelButton);
 
 };
-function renderMain(index) {
+function renderEmptyMain() {
+    const mainDiv = document.getElementById('main-div');
+    mainDiv.innerHTML = '';
+};
+function renderMain(goalId) {
     const mainDiv = document.getElementById('main-div');
     mainDiv.innerHTML = '';
 
@@ -85,38 +96,81 @@ function renderMain(index) {
 
     const title = document.createElement('div');
     title.id = 'goal-title';
-    title.innerText = goals[index].title;
+    title.innerText = goals[goalId].title;
 
     const deleteButton = document.createElement('button');
     deleteButton.id = 'delete-goal-button';
     deleteButton.innerText = 'Delete Goal';
-    deleteButton.dataset.goalId = index;
+    deleteButton.dataset.goalId = goalId;
     deleteButton.addEventListener('click', deleteGoalClick);
 
     titleDiv.appendChild(title);
     titleDiv.appendChild(deleteButton);
 
     // Tasks area
-
     const tasksDiv = document.createElement('div');
     tasksDiv.id = 'tasks-div';
-        // fill tasks
 
-    // Button
+    let oneTaskDiv;
+    let taskTitle;
+    let doneTaskButton;
+    for(let i = 0; i < goals[goalId].tasks.length; i++) {
+        oneTaskDiv = document.createElement('div');
+        oneTaskDiv.className = 'task';
+        taskTitle = document.createElement('div');
+        taskTitle.className = 'task-title';
+        taskTitle.innerText = goals[goalId].tasks[i];
+        doneTaskButton = document.createElement('button');
+        doneTaskButton.className = 'done-task-button';
+        doneTaskButton.innerText = 'Done';
+        doneTaskButton.dataset.goalId = goalId;
+        doneTaskButton.dataset.taskId = i;
+        doneTaskButton.addEventListener('click', doneTaskClick);
+        oneTaskDiv.appendChild(taskTitle);
+        oneTaskDiv.appendChild(doneTaskButton);
+        tasksDiv.appendChild(oneTaskDiv);
+    }
+
+    // Buttons area
+    const buttonsDiv = document.createElement('div');
     const addButton = document.createElement('button');
+
+    buttonsDiv.id = 'tasks-buttons-div'
+    
     addButton.id = 'add-task-button';
     addButton.innerText = 'Add Task';
-    addButton.dataset.goalId = index;  
+    addButton.dataset.goalId = goalId;
+    addButton.addEventListener('click', addTaskClick);
+
+    buttonsDiv.appendChild(addButton);
 
     mainDiv.appendChild(titleDiv);
     mainDiv.appendChild(tasksDiv);
-    mainDiv.appendChild(addButton);
+    mainDiv.appendChild(buttonsDiv);
+};
+function renderAddTask(goalId) {
+    const tasksDiv = document.getElementById('tasks-div');
+    const buttonsDiv = document.getElementById('tasks-buttons-div');
+
+    const textInput = document.createElement('input');
+    textInput.type = 'text';
+    textInput.id = 'add-task-input';
+    tasksDiv.appendChild(textInput);
+    textInput.focus();
+
+    buttonsDiv.innerHTML = '';
+    const okButton = document.createElement('button');
+    okButton.innerText = 'OK';
+    okButton.addEventListener('click', okTaskClick);
+    const cancelButton = document.createElement('button');
+    cancelButton.innerText = 'CANCEL';
+    cancelButton.addEventListener('click', cancelTaskClick);
+    buttonsDiv.dataset.goalId = goalId;
+    buttonsDiv.appendChild(okButton);
+    buttonsDiv.appendChild(cancelButton);
+
 };
 
-function renderEmptyMain() {
-    const mainDiv = document.getElementById('main-div');
-    mainDiv.innerHTML = '';
-}
 // Controler
 function goalClick(event) {
     const goalButton = event.target;
@@ -133,22 +187,55 @@ function okGoalClick(event) {
             tasks: []
         });
         renderSidebar();
+        updateServer();
     }
 };
 function cancelGoalClick(event) {
     renderSidebar();
 };
-function deleteGoalClick(event){
+function deleteGoalClick(event) {
     const deleteButton = event.target;
     const goalId = deleteButton.dataset.goalId;
     goals.splice(goalId, 1);
     renderSidebar();
     renderEmptyMain();
+    updateServer();
+};
+function addTaskClick(event) {
+    const addButton = event.target;
+    const goalId = addButton.dataset.goalId;
+    renderAddTask(goalId); 
+};
+function okTaskClick(event) {
+    const okButton = event.target;
+    const textInput = document.getElementById('add-task-input');
+    const goalId = okButton.parentElement.dataset.goalId;
+
+    if (isValid(textInput.value)) {
+        goals[goalId].tasks.push(textInput.value);
+        renderMain(goalId);
+        updateServer();
+    }
+};
+function cancelTaskClick(event) {
+    const cancelButton = event.target;
+    const goalId = cancelButton.parentElement.dataset.goalId;
+    
+    renderMain(goalId);
+};
+function doneTaskClick(event) {
+    const doneButton = event.target;
+    const goalId = doneButton.dataset.goalId;
+    const taskId = doneButton.dataset.taskId;
+    goals[goalId].tasks.splice(taskId, 1);
+    renderMain(goalId);
+    updateServer();
 }
+
 
 function isValid(str) {
     return str.match(/^[a-zA-Z0-9]+$/) !== null && str.length < 16;
-}
+};
 // Run
-renderSidebar();
-renderEmptyMain();
+//renderSidebar();
+//renderEmptyMain();
