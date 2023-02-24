@@ -176,6 +176,7 @@ function renderAddTask(goalId) {
     const textInput = document.createElement('input');
     textInput.type = 'text';
     textInput.id = 'add-task-input';
+    textInput.maxLength = 34;
     tasksDiv.appendChild(textInput);
     textInput.focus();
 
@@ -265,9 +266,7 @@ function doneTaskClick(event) {
 };
 function stopServerClick() {
     socket.send(JSON.stringify({type: "STOP"}));
-}
-
-
+};
 function isValid(str) {
-    return str.match(/^[a-zA-Z0-9]+$/) !== null;
+    return str.match(/^[a-zA-Z0-9 ._,]+$/) !== null;
 };
