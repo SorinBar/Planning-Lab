@@ -55,7 +55,7 @@ function renderSidebar() {
     const addGoalButton = document.createElement('input');
     addGoalButton.id = 'add-goal-button';
     addGoalButton.type = 'image';
-    addGoalButton.src = 'icons/plus2.png';
+    addGoalButton.src = 'icons/add.png';
     addGoalButton.alt = 'Add';
     addGoalButton.addEventListener('click', addGoalClick);
     buttonsDiv.appendChild(addGoalButton);
@@ -66,6 +66,7 @@ function renderAddGoal() {
     const textInput = document.createElement('input');
     textInput.type = 'text';
     textInput.id = 'add-goal-input';
+    textInput.maxLength = 16;
     goalsDiv.appendChild(textInput);
     textInput.focus();
 
@@ -230,12 +231,16 @@ function doneTaskClick(event) {
     goals[goalId].tasks.splice(taskId, 1);
     renderMain(goalId);
     updateServer();
+};
+function stopServerClick() {
+    socket.send(JSON.stringify({type: "STOP"}));
 }
 
 
 function isValid(str) {
-    return str.match(/^[a-zA-Z0-9]+$/) !== null && str.length < 16;
+    return str.match(/^[a-zA-Z0-9]+$/) !== null;
 };
 // Run
-//renderSidebar();
-//renderEmptyMain();
+renderSidebar();
+renderEmptyMain();
+renderAddGoal();

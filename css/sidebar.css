@@ -1,28 +1,36 @@
+:root {
+    --blue-lightest: rgb(233, 248, 249);
+    --blue-light: rgb(192, 238, 242);
+    --blue: rgb(83, 127, 231);
+    --black: rgb(24, 24, 35);
+}
+
 #sidebar-div {
-    background-color: rgb(203, 193, 206);
+    background-color: var(--blue-light);
     position: fixed;
     display: flex;
     flex-direction: column;
-    top: 8px;
-    bottom: 8px;
-    left: 8px;
+    top: 10px;
+    bottom: 80px;
+    left: 10px;
     width: 220px;
     min-height: 280px;
-    border-radius: 10px;
+    border-radius: 4px;
+    box-shadow: 2px 2px 6px rgb(83, 127, 231, 0.4);
 }
 
 #logo {
-    width: 100px;
-    margin-top: 12px;
-    margin-left: 20px;
+    width: 110px;
+    margin-top: 14px;
+    margin-left: 16px;
     margin-bottom: 60px;
-    align-items: center;
 }
 
 #goals-div {
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
+    padding-top: 4px;
 }
 
 .goals-button {
@@ -32,11 +40,22 @@
     margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 10px;
-    border-radius: 6px;
-    color: #695E93;
+    border-radius: 4px;
+    background-color: var(--blue-lightest);
+    color: var(--black);
     font-size: large;
-    font-weight: 700;
+    font-weight: 500;
     cursor: pointer;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.10s, box-shadow 0.10s;
+}
+
+.goals-button:hover {
+    background-color: white;
+}
+
+.goals-button:active {
+    box-shadow: none;
 }
 
 #goals-buttons-div {
@@ -46,23 +65,44 @@
 }
 
 #add-goal-button {
-    width: 30px;
+    width: 24px;
     border-radius: 12px;
     padding: 4px;
     margin-top: 12px;
     margin-bottom: 40px;
     margin-left: auto;
     margin-right: auto;
-    transition: background-color 0.15s;
+    transition: background-color 0.10s, box-shadow 0.10s;
     align-self: center;
 }
 
 #add-goal-button:hover {
-    background-color: rgb(243, 243, 243);
+    background-color: var(--blue-lightest);
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+
 }
 
 #add-goal-button:active {
-    background-color: #958db4;
+    background-color: white;
+    box-shadow: none;
 }
 
+#add-goal-input {
+    border: none;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    color: var(--black);
+    font-size: large;
+    font-weight: 500;
+    text-align: center;
+    background-color: rgba(233, 248, 249, 0.8);
+}
+
+#add-goal-input:focus {
+    outline: none;
+}
 
