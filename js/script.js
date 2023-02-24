@@ -19,12 +19,16 @@ socket.addEventListener('message', function (event) {
             goals = response.data;
             renderSidebar();
             renderEmptyMain();
+            // Deletee
+            renderMain(0);
         }
     } 
 });
 
 socket.addEventListener('error', function (event) {
     console.error('WebSocket error:', event);
+    renderSidebar();
+    renderEmptyMain();
 });
 
 function updateServer() {
@@ -54,6 +58,7 @@ function renderSidebar() {
 
     const addGoalButton = document.createElement('input');
     addGoalButton.id = 'add-goal-button';
+    addGoalButton.className = 'sidebar-buttons';
     addGoalButton.type = 'image';
     addGoalButton.src = 'icons/add.png';
     addGoalButton.alt = 'Add';
@@ -71,11 +76,19 @@ function renderAddGoal() {
     textInput.focus();
 
     const goalsButtonDiv = document.getElementById('goals-buttons-div');
-    const okButton = document.createElement('button');
-    okButton.innerText = 'OK';
+    const okButton = document.createElement('input');
+    okButton.id = 'ok-goal-button';
+    okButton.className = 'sidebar-buttons';
+    okButton.type = 'image';
+    okButton.src = 'icons/ok.png';
+    okButton.alt = 'OK';
     okButton.addEventListener('click', okGoalClick);
-    const cancelButton = document.createElement('button');
-    cancelButton.innerText = 'CANCEL';
+    const cancelButton = document.createElement('input');
+    cancelButton.id = 'cancel-goal-button';
+    cancelButton.className = 'sidebar-buttons';
+    cancelButton.type = 'image';
+    cancelButton.src = 'icons/close.png';
+    cancelButton.alt = 'CANCEL';
     cancelButton.addEventListener('click', cancelGoalClick);
 
     goalsButtonDiv.innerHTML = '';
@@ -99,9 +112,12 @@ function renderMain(goalId) {
     title.id = 'goal-title';
     title.innerText = goals[goalId].title;
 
-    const deleteButton = document.createElement('button');
+    const deleteButton = document.createElement('input');
     deleteButton.id = 'delete-goal-button';
-    deleteButton.innerText = 'Delete Goal';
+    deleteButton.className = 'main-buttons';
+    deleteButton.type = 'image';
+    deleteButton.src = 'icons/delete.png';
+    deleteButton.alt = 'Delete';
     deleteButton.dataset.goalId = goalId;
     deleteButton.addEventListener('click', deleteGoalClick);
 
@@ -121,9 +137,11 @@ function renderMain(goalId) {
         taskTitle = document.createElement('div');
         taskTitle.className = 'task-title';
         taskTitle.innerText = goals[goalId].tasks[i];
-        doneTaskButton = document.createElement('button');
+        const doneTaskButton = document.createElement('input');
         doneTaskButton.className = 'done-task-button';
-        doneTaskButton.innerText = 'Done';
+        doneTaskButton.type = 'image';
+        doneTaskButton.src = 'icons/done.png';
+        doneTaskButton.alt = 'Done';
         doneTaskButton.dataset.goalId = goalId;
         doneTaskButton.dataset.taskId = i;
         doneTaskButton.addEventListener('click', doneTaskClick);
@@ -188,6 +206,7 @@ function okGoalClick(event) {
             tasks: []
         });
         renderSidebar();
+        renderMain(goals.length - 1);
         updateServer();
     }
 };
@@ -240,7 +259,3 @@ function stopServerClick() {
 function isValid(str) {
     return str.match(/^[a-zA-Z0-9]+$/) !== null;
 };
-// Run
-renderSidebar();
-renderEmptyMain();
-renderAddGoal();

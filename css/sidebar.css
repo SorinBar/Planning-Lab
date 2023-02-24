@@ -1,7 +1,7 @@
 :root {
     --blue-lightest: rgb(233, 248, 249);
     --blue-light: rgb(192, 238, 242);
-    --blue: rgb(83, 127, 231);
+    --blue: rgba(83, 152, 241);
     --black: rgb(24, 24, 35);
 }
 
@@ -16,11 +16,11 @@
     width: 220px;
     min-height: 280px;
     border-radius: 4px;
-    box-shadow: 2px 2px 6px rgb(83, 127, 231, 0.4);
+    box-shadow: 2px 2px 6px rgb(0, 0, 0, 0.2);
 }
 
 #logo {
-    width: 110px;
+    width: 100px;
     margin-top: 14px;
     margin-left: 16px;
     margin-bottom: 60px;
@@ -30,7 +30,6 @@
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
-    padding-top: 4px;
 }
 
 .goals-button {
@@ -58,35 +57,6 @@
     box-shadow: none;
 }
 
-#goals-buttons-div {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}
-
-#add-goal-button {
-    width: 24px;
-    border-radius: 12px;
-    padding: 4px;
-    margin-top: 12px;
-    margin-bottom: 40px;
-    margin-left: auto;
-    margin-right: auto;
-    transition: background-color 0.10s, box-shadow 0.10s;
-    align-self: center;
-}
-
-#add-goal-button:hover {
-    background-color: var(--blue-lightest);
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
-
-}
-
-#add-goal-button:active {
-    background-color: white;
-    box-shadow: none;
-}
-
 #add-goal-input {
     border: none;
     padding-top: 10px;
@@ -106,3 +76,44 @@
     outline: none;
 }
 
+#goals-buttons-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.sidebar-buttons {
+    transition: background-color 0.10s, box-shadow 0.10s;
+    padding: 6px;
+    margin-bottom: 40px;
+    margin-left: 6px;
+    margin-right: 6px;
+}
+
+.sidebar-buttons:hover {
+    background-color: var(--blue-lightest);
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.sidebar-buttons:active {
+    background-color: white;
+    box-shadow: none;
+}
+
+#add-goal-button {
+    width: 24px;
+    border-radius: 10px;
+    margin-top: 12px;
+}
+
+#ok-goal-button {
+    width: 16px;
+    padding-left: 7px;
+    padding-right: 7px;
+    border-radius: 8px;
+}
+
+#cancel-goal-button {
+    width: 18px;
+    border-radius: 9px;
+}

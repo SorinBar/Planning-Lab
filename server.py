@@ -49,7 +49,7 @@ async def handle_request(websocket, path):
             # Wait for a message from the client
             request = await websocket.recv()
             # INFO - Reqest received from the client
-            await execute(None, print, "Reqest Received")
+            await execute(None, print, "Request Received")
 
             # Parse the JSON message
             data = await execute(None, json.loads, request)
