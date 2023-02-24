@@ -43,7 +43,7 @@ body {
 
 .main-buttons {
     transition: background-color 0.10s, box-shadow 0.10s;
-    padding: 4px;
+    padding: 6px;
 }
 
 .main-buttons:hover {
@@ -57,7 +57,6 @@ body {
 
 #delete-goal-button {
     width: 24px;
-    padding: 6px;
     margin-top: 10px;
     margin-right: 10%;
     border-radius: 8px;
@@ -90,6 +89,7 @@ body {
     color: var(--black);
     margin: 10px;
     margin-left: 16px;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 20px;
     font-weight: 500;
 }
@@ -116,4 +116,46 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    margin-top: 14px;
+    margin-bottom: 20px; 
+}
+
+#add-task-button {
+    width: 30px;
+    border-radius: 10px;
+}
+
+#add-task-input {
+    background-color: var(--blue-lightest);
+    margin: 6px;
+    margin-left: 18px;
+    margin-right: 18px;
+    border: none;
+    border-left: solid;
+    border-color: var(--blue);
+    border-left-width: 10px;
+    border-radius: 4px;
+    height: 42px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    text-indent: 16px;
+}
+
+#add-task-input:focus {
+    outline: none;
+}
+
+#ok-task-button {
+    width: 24px;
+    border-radius: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#cancel-task-button {
+    width: 24px;
+    border-radius: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
 }

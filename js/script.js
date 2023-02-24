@@ -152,15 +152,17 @@ function renderMain(goalId) {
 
     // Buttons area
     const buttonsDiv = document.createElement('div');
-    const addButton = document.createElement('button');
 
-    buttonsDiv.id = 'tasks-buttons-div'
-    
+    const addButton = document.createElement('input');
     addButton.id = 'add-task-button';
-    addButton.innerText = 'Add Task';
+    addButton.className = 'main-buttons';
+    addButton.type = 'image';
+    addButton.src = 'icons/add.png';
+    addButton.alt = 'Add';
     addButton.dataset.goalId = goalId;
     addButton.addEventListener('click', addTaskClick);
 
+    buttonsDiv.id = 'tasks-buttons-div';
     buttonsDiv.appendChild(addButton);
 
     mainDiv.appendChild(titleDiv);
@@ -178,16 +180,26 @@ function renderAddTask(goalId) {
     textInput.focus();
 
     buttonsDiv.innerHTML = '';
-    const okButton = document.createElement('button');
-    okButton.innerText = 'OK';
+
+    const okButton = document.createElement('input');
+    okButton.id = 'ok-task-button';
+    okButton.className = 'main-buttons';
+    okButton.type = 'image';
+    okButton.src = 'icons/ok.png';
+    okButton.alt = 'OK';
     okButton.addEventListener('click', okTaskClick);
-    const cancelButton = document.createElement('button');
-    cancelButton.innerText = 'CANCEL';
+
+    const cancelButton = document.createElement('input');
+    cancelButton.id = 'cancel-task-button';
+    cancelButton.className = 'main-buttons';
+    cancelButton.type = 'image';
+    cancelButton.src = 'icons/close.png';
+    cancelButton.alt = 'CANCEL';
     cancelButton.addEventListener('click', cancelTaskClick);
+
     buttonsDiv.dataset.goalId = goalId;
     buttonsDiv.appendChild(okButton);
     buttonsDiv.appendChild(cancelButton);
-
 };
 
 // Controler
